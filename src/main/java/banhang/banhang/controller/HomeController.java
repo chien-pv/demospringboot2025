@@ -1,6 +1,7 @@
 package banhang.banhang.controller;
 
 import java.io.File;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +18,8 @@ import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -32,19 +35,39 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 
 @Controller
-@RequestMapping("login") 
 public class HomeController {
+    @Autowired
+    HttpSession session;
+
     @Autowired
     UserDAO userDAO;
     @Autowired 
     ServletContext context;
-
-    @ResponseBody
+    // @ResponseBody
     @GetMapping("")
-    public List<User> index(Model model) {
-        List<User> users =  userDAO.findAll();
-        return users;
+    public String index(Model model){
+        session.setAttribute("currentName", "Nguyen van D");
+        Staff staff = new Staff();
+        staff.pass = "1234465657";
+        staff.uname = "tran van c";
+        staff.photo = "071-blue-simple-company.jpeg";
+        staff.birthday = new Date();
+
+        // model.addAttribute("q", q);
+
+        model.addAttribute("staff", staff);
+        return "home/index";
     }
+
+    @GetMapping("about")
+    public String about(Model model) {
+        return "home/about";
+    }
+    
+    // public List<User> index(Model model) {
+    //     List<User> users =  userDAO.findAll();
+    //     return users;
+    // }
 
     @ModelAttribute("q")
     public String showSearch(){
