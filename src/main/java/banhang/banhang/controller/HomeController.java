@@ -44,18 +44,8 @@ public class HomeController {
     @Autowired 
     ServletContext context;
     // @ResponseBody
-    @GetMapping("")
+    @GetMapping("/")
     public String index(Model model){
-        session.setAttribute("currentName", "Nguyen van D");
-        Staff staff = new Staff();
-        staff.pass = "1234465657";
-        staff.uname = "tran van c";
-        staff.photo = "071-blue-simple-company.jpeg";
-        staff.birthday = new Date();
-
-        // model.addAttribute("q", q);
-
-        model.addAttribute("staff", staff);
         return "home/index";
     }
 

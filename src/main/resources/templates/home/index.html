@@ -1,20 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head th:replace="~{/layouts/header}"></head>
+<html lang="en" th:replace="~{/layouts/template.html::view(~{::main})}">
+    <head>
+        <title>hello</title>
+    </head>
     <body>
-        <header th:replace="~{/layouts/nav}"></header>
         <main>
-            <h1>Hello Spring boot server</h1>
-            <th:block th:object="${staff}">
-                <h2 th:text="${session.currentName}"> abc</h2>
-                <h1 th:text="${param.q}">abc</h1>
-                <h1 th:text="*{#strings.capitalizeWords(uname)}"> demo </h1>
-                <h1 th:text="*{pass}"> demo </h1>
-                <h1 th:text="*{#dates.format(birthday, 'dd/MM/yyyy')}"> demo
-                </h1>
-                <img alt="hello" th:src="@{|/photos/*{photo}|}">
-            </th:block>
+            <h1>Hello Home</h1>
+            <h2>Hello</h2>
         </main>
-        <div th:replace="~{/layouts/footer}"></div>
     </body>
 </html>
