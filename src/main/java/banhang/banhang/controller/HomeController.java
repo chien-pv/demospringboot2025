@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +28,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import banhang.banhang.DAO.UserDAO;
 import banhang.banhang.models.User;
+import banhang.banhang.service.CookieService;
+import banhang.banhang.service.CrudService;
+import banhang.banhang.service.MysqlCrudService;
+import banhang.banhang.service.PgCrudService;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,6 +41,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class HomeController {
+
+    @Qualifier("CS2")
+    @Autowired
+    CookieService cookieService;
+
+    @Autowired
+    CrudService crudService;
+
     @Autowired
     HttpSession session;
 
@@ -46,6 +59,8 @@ public class HomeController {
     // @ResponseBody
     @GetMapping("/")
     public String index(Model model){
+        crudService.create();
+        cookieService.create(null, null, 0);
         return "home/index";
     }
 
