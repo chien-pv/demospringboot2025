@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<div th:replace="~{/layouts/template.html::view(~{::main}, 'Home Page')}"
+    lang="en">
+    <main class="container">
+        <h1>Quản Lý Categories</h1>
+        <form method="post" action="/categories/create">
+            <div class="mb-3">
+                <label class="form-label">Name</label>
+                <input type="text" class="form-control" name="name">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Description</label>
+                <input type="text" class="form-control" name="description">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each=" item : ${categories}" th:object="${item}">
+                    <th th:text="*{id}" scope="row">1</th>
+                    <td th:text="*{name}">Mark</td>
+                    <td th:text="*{description}">Otto</td>
+                    <td>
+                        <a th:href="@{|categories/delete/*{id}|}"
+                            class="btn btn-outline-danger">Delete</a>
+                        <button type="button"
+                            class="btn btn-outline-warning">Edit</button>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </main>
+</div>
