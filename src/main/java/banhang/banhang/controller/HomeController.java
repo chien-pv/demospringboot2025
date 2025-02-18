@@ -7,6 +7,9 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,11 +29,12 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import banhang.banhang.DAO.ProductDAO;
 import banhang.banhang.DAO.UserDAO;
+import banhang.banhang.entity.Product;
 import banhang.banhang.models.User;
 import banhang.banhang.service.CookieService;
 import banhang.banhang.service.CrudService;
-import banhang.banhang.service.MysqlCrudService;
 import banhang.banhang.service.PgCrudService;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,6 +45,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class HomeController {
+    @Autowired
+    ProductDAO productDAO;
 
     @Qualifier("CS2")
     @Autowired
@@ -56,12 +62,16 @@ public class HomeController {
     UserDAO userDAO;
     @Autowired 
     ServletContext context;
-    // @ResponseBody
+    @ResponseBody
     @GetMapping("/")
-    public String index(Model model){
-        crudService.create();
-        cookieService.create(null, null, 0);
-        return "home/index";
+    public Page<Product> index(Model model, @RequestParam("page")Integer page){
+        // crudService.create();
+        // cookieService.create(null, null, 0);
+        // List<Product> products = productDAO.findAll(Sort.by(Sort.Direction.DESC, "name"));
+        // List<Product> products = productDAO.findByQuantityBetween(10,20);
+        Page<Product> pages = productDAO.findAll(PageRequest.of((page-1), 2));
+        List<Product> products = pages.getContent();
+        return pages;
     }
 
     @GetMapping("about")
