@@ -11,10 +11,13 @@ import banhang.banhang.entity.Product;
 
 public interface ProductDAO extends JpaRepository<Product, Long>  {
 
-    // @Query("FROM Product o Where o.quantity > ?1")
-    // List<Product> findByQuantity(Integer x);
+    @Query(name = "findByK")
+    List<Product> findByQuantity(Integer x);
+
     // List<Product> findAll(Pageable pageable);
     List<Product> findByQuantityLessThan(Integer quantity);
 
     List<Product> findByQuantityBetween(Integer min, Integer max);
+
+    List<Product> findByPriceLessThanAndNameContaining(Integer price, String name);
 }
